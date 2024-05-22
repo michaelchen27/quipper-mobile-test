@@ -1,0 +1,26 @@
+-- VIDEOS -------------------------------------
+CREATE TABLE Video(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   title TEXT NOT NULL,
+   presenter_name TEXT,
+   description TEXT,
+   thumbnail_url TEXT,
+   video_url TEXT,
+   video_duration INTEGER
+);
+
+insertVideo:
+INSERT INTO Video(id, title, presenter_name, description, thumbnail_url, video_url, video_duration)
+VALUES(?,?,?,?,?,?,?);
+
+selectVideoById:
+SELECT *
+FROM Video
+WHERE id = ?;
+
+selectAllVideos:
+SELECT *
+FROM Video;
+
+removeAllVideos:
+DELETE FROM Video;
