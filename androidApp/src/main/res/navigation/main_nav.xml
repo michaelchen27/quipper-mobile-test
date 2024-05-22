@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/listVideoFragment">
+
+    <fragment
+        android:id="@+id/listVideoFragment"
+        android:name="com.quipper.test.activity_main.fragments.ListVideoFragment"
+        android:label="fragment_list_video"
+        tools:layout="@layout/fragment_list_video" />
+</navigation>
