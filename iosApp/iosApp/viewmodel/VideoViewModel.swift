@@ -10,6 +10,7 @@ class VideoViewModel: ObservableObject {
     
     let videoSDK: VideoSDK
     
+    
     enum LoadableVideo {
         case loading
         case result([Video])

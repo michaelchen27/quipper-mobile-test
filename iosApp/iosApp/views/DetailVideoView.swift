@@ -16,11 +16,15 @@ struct DetailVideoView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                // Thumbnail
+            VStack(alignment: .leading, spacing: 8) {
                 // Video Player
                 VideoPlayer(player: AVPlayer(url: URL(string: video.videoUrl ?? "")!))
                     .frame(height: 200)
+                
+                // Duration
+                Text("Duration: \( TimeUtil().formatMillisToStopwatch(millis: video.videoDuration ?? 0))")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
 
                 // Title and Presenter
                 Text(video.title ?? "")
@@ -36,12 +40,6 @@ struct DetailVideoView: View {
                 // Description
                 Text(video.videoDescription ?? "")
                     .padding(.bottom, 8)
-
-                // Duration
-               
-                Text("Duration: \( formatDuration(milliseconds: Int64(video.videoDuration ?? 0)))")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
 
 
             }

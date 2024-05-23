@@ -12,7 +12,6 @@
 		205E52232BFE22BA00290347 /* VideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E52222BFE22BA00290347 /* VideoViewModel.swift */; };
 		205E52282BFE392C00290347 /* ListVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E52272BFE392C00290347 /* ListVideoView.swift */; };
 		205E522D2BFE3FC100290347 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E522C2BFE3FC100290347 /* CardView.swift */; };
-		205E52302BFE423400290347 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E522F2BFE423400290347 /* Utils.swift */; };
 		205E52322BFE448800290347 /* DetailVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205E52312BFE448800290347 /* DetailVideoView.swift */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
@@ -26,7 +25,6 @@
 		205E52222BFE22BA00290347 /* VideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewModel.swift; sourceTree = "<group>"; };
 		205E52272BFE392C00290347 /* ListVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVideoView.swift; sourceTree = "<group>"; };
 		205E522C2BFE3FC100290347 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		205E522F2BFE423400290347 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		205E52312BFE448800290347 /* DetailVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVideoView.swift; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		6FA239C38CFB2DBCE704ACBC /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,14 +81,6 @@
 			path = loading_view;
 			sourceTree = "<group>";
 		};
-		205E522E2BFE422800290347 /* util */ = {
-			isa = PBXGroup;
-			children = (
-				205E522F2BFE423400290347 /* Utils.swift */,
-			);
-			path = util;
-			sourceTree = "<group>";
-		};
 		42799AB246E5F90AF97AA0EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,7 +111,6 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				205E522E2BFE422800290347 /* util */,
 				205E52242BFE38D300290347 /* views */,
 				205E52212BFE22AD00290347 /* viewmodel */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
@@ -290,7 +279,6 @@
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				205E522D2BFE3FC100290347 /* CardView.swift in Sources */,
 				205E52322BFE448800290347 /* DetailVideoView.swift in Sources */,
-				205E52302BFE423400290347 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,6 @@ import model.Video
 import network.network_interface.VideoAPIInterface
 
 
-
 class VideoAPI : VideoAPIInterface {
     private val httpClient = HttpClient {
         install(ContentNegotiation) {
@@ -38,7 +37,7 @@ class VideoAPI : VideoAPIInterface {
                             "SocketTimeOut", cause
                         )
 
-                        else -> throw cause
+                        else -> throw CustomException.UnknownError()
                     }
                 }
             }
@@ -55,6 +54,12 @@ class VideoAPI : VideoAPIInterface {
 
         } catch (e: CustomException.OfflineError) {
             throw CustomException.OfflineError()
+
+        } catch (e: CustomException.NetworkError) {
+            throw CustomException.NetworkError()
+
+        } catch (e: Exception) {
+            throw CustomException.UnknownError()
         }
     }
 }

@@ -1,6 +1,4 @@
-object MyUtil {
-    private val platform: Platform = getPlatform()
-
+class TimeUtil {
     fun formatMillisToStopwatch(millis: Long?): String {
         if(millis == null) return ""
 
@@ -14,5 +12,7 @@ object MyUtil {
 
         } else {
             "${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}"
-        }    }
+        }
+    }
+
 }

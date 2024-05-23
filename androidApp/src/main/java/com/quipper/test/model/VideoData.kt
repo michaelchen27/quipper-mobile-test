@@ -1,6 +1,6 @@
 package com.quipper.test.model
 
-import MyUtil
+import TimeUtil
 import com.quipper.test.core.base.DiffUtilCallbackItem
 import model.Video
 
@@ -16,13 +16,13 @@ data class VideoData(
 }
 
 // Mapper
-fun Video.toDomain() = VideoData(
+fun Video.toDomain(): VideoData = VideoData(
     title = title,
     presenterName = presenterName,
     videoDescription = videoDescription,
     thumbnailUrl = thumbnailUrl,
     videoUrl = videoUrl,
-    videoDuration = MyUtil.formatMillisToStopwatch(videoDuration),
+    videoDuration = TimeUtil().formatMillisToStopwatch(videoDuration),
 )
 
 fun List<Video>.toListDomain(): List<VideoData> = map {

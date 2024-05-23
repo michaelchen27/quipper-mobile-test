@@ -18,12 +18,12 @@ struct ListVideoView: View {
             VStack (alignment: .leading) {
                 videoList()
 
-            }.onAppear {
-                videoViewModel.loadVideos(forceReload: false)
             }
         }.refreshable {
             videoViewModel.loadVideos(forceReload: true)
         }
+        .navigationTitle("Video List")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     

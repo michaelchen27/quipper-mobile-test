@@ -42,9 +42,14 @@ class ListVideoViewModel : ViewModel() {
         } catch (e: CustomException.OfflineError) {
             _listVideoUIState.emit(VideoUIState.Error("Tidak ada koneksi internet"))
 
+        } catch (e: CustomException.NetworkError) {
+            _listVideoUIState.emit(VideoUIState.Error("Not 200"))
 
-        } catch (e: UnknownHostException) {
+        } catch (e: UnknownHostException) { // Android only because java.net
             _listVideoUIState.emit(VideoUIState.Error("Tidak ada koneksi internet"))
+
+        } catch (e: Exception) {
+            _listVideoUIState.emit(VideoUIState.Error("Unknown Error."))
 
         }
     }
