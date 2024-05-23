@@ -9,5 +9,18 @@
         android:id="@+id/listVideoFragment"
         android:name="com.quipper.test.activity_main.fragments.ListVideoFragment"
         android:label="fragment_list_video"
-        tools:layout="@layout/fragment_list_video" />
+        tools:layout="@layout/fragment_list_video">
+        <action
+            android:id="@+id/action_listVideoFragment_to_detailVideoFragment"
+            app:destination="@id/detailVideoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"  />
+    </fragment>
+    <fragment
+        android:id="@+id/detailVideoFragment"
+        android:name="com.quipper.test.DetailVideoFragment"
+        android:label="fragment_detail_video"
+        tools:layout="@layout/fragment_detail_video"/>
 </navigation>

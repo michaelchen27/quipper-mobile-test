@@ -5,14 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.quipper.test.VideoSDK
 import com.quipper.test.cache.AndroidDatabaseDriverFactory
+import com.quipper.test.model.VideoData
+import com.quipper.test.model.toListDomain
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import model.Video
 
 class ListVideoViewModel: ViewModel() {
-    private val _videoList = MutableStateFlow<List<Video>>(listOf())
-    val videoList: StateFlow<List<Video>> get() = _videoList
+    private val _videoList = MutableSharedFlow<List<VideoData>>()
+    val videoList: SharedFlow<List<VideoData>> get() = _videoList
 
     private lateinit var videoSDK: VideoSDK
 
@@ -23,7 +27,9 @@ class ListVideoViewModel: ViewModel() {
 
     fun getVideos(forceReload: Boolean = false) = viewModelScope.launch {
         val videos = videoSDK.getVideos(forceReload)
-        _videoList.value = videos
+        _videoList.emit(
+            videos.toListDomain()
+        )
     }
 
 
