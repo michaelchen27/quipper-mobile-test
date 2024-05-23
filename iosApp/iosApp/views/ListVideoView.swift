@@ -45,11 +45,12 @@ struct ListVideoView: View {
                     }
             )
             
-        case .error( _):
+        case .error(let errMsg):
             return AnyView(
-                Text("List video tidak dapat dimuat")
+                Text(errMsg)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 150)
+                    .padding(.horizontal, 16)
             )
         }
     }

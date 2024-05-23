@@ -4,10 +4,15 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.network.sockets.SocketTimeoutException
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.util.InternalAPI
+import io.ktor.util.rootCause
+import io.ktor.utils.io.errors.IOException
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.serialization.json.Json
 import model.CustomException
 import model.Video
@@ -15,6 +20,7 @@ import network.network_interface.VideoAPIInterface
 
 
 class VideoAPI : VideoAPIInterface {
+    @OptIn(InternalAPI::class)
     private val httpClient = HttpClient {
         install(ContentNegotiation) {
             json(Json {
@@ -33,11 +39,28 @@ class VideoAPI : VideoAPIInterface {
                 handleResponseExceptionWithRequest { cause, _ ->
                     println(cause.message)
                     when (cause) {
-                        is SocketTimeoutException, is ConnectTimeoutException -> throw CustomException.OfflineError(
-                            "SocketTimeOut", cause
-                        )
+                        is SocketTimeoutException,
+                        is ConnectTimeoutException,
+                        is HttpRequestTimeoutException,
+                        is IOException,
+                        is TimeoutCancellationException,
+                        -> {
+                            throw CustomException.OfflineError("Offline", cause)
+                        }
 
-                        else -> throw CustomException.UnknownError()
+                        else -> {
+                            val rootCause = cause.rootCause
+                            if (rootCause?.message?.contains(
+                                    "offline",
+                                    ignoreCase = true
+                                ) == true
+                            ) {
+                                throw CustomException.OfflineError("Offline", cause)
+                            } else {
+                                throw CustomException.UnknownError()
+
+                            }
+                        }
                     }
                 }
             }
