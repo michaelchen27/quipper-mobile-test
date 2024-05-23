@@ -7,6 +7,8 @@
     tools:context=".DetailVideoFragment">
 
     <androidx.appcompat.widget.Toolbar
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:theme="@style/ToolbarTheme"
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"

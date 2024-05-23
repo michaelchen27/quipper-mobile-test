@@ -1,11 +1,8 @@
 package com.quipper.test.activity_main.fragments
 
-import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,28 +26,43 @@ class ListVideoFragment : BaseFragment<FragmentListVideoBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentListVideoBinding =
         FragmentListVideoBinding::inflate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun initView() {
         binding.rvVideoList.adapter = adapter
-        viewModel.setupDbDriver(requireContext())
 
-        binding.refresh.setOnRefreshListener{
-            viewModel.getVideos(forceReload = true)
+        binding.refresh.setOnRefreshListener {
+            viewModel.getVideos(true)
         }
 
     }
 
     override fun initData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.videoList.collectLatest { videos ->
-                binding.refresh.isRefreshing = false
-                adapter.submitList(videos)
+            launch {
+                viewModel.listVideoUIState.collectLatest { uiState ->
+                    when (uiState) {
+                        is ListVideoViewModel.VideoUIState.Success -> {
+                            binding.refresh.isRefreshing = false
+                            adapter.submitList(uiState.videos)
+                        }
+
+                        is ListVideoViewModel.VideoUIState.Error -> {
+                            binding.refresh.isRefreshing = false
+
+                            Toast.makeText(requireContext(), uiState.errMsg, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                        is ListVideoViewModel.VideoUIState.Loading -> {
+                            binding.refresh.isRefreshing = true
+
+                        }
+                    }
+
+                }
             }
         }
+
+        viewModel.setupDbDriver(requireContext())
     }
 
     private fun onItemClick(data: VideoData) {

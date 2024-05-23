@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.navigation.fragment.findNavController
 import com.quipper.test.activity_main.MainViewModel
 import com.quipper.test.core.base.BaseFragment
 import com.quipper.test.databinding.FragmentDetailVideoBinding
@@ -45,18 +46,24 @@ class DetailVideoFragment : BaseFragment<FragmentDetailVideoBinding>() {
         player.play()
     }
 
-    override fun initView() = with(binding) {
-        setupPlayerView()
+    private fun setupUIData() = with(binding){
         toolbar.title = videoData.title
         tvTitle.text = videoData.title
         tvPresenter.text = videoData.presenterName
         tvDescription.text = videoData.videoDescription
+    }
+
+    override fun initView() {
+        setupPlayerView()
+        setupUIData()
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
     }
 
-    override fun initData() {
-
-    }
+    override fun initData() = Unit
 
     override fun onStop() {
         super.onStop()

@@ -8,29 +8,45 @@ import com.quipper.test.cache.AndroidDatabaseDriverFactory
 import com.quipper.test.model.VideoData
 import com.quipper.test.model.toListDomain
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import model.Video
+import model.CustomException
+import java.net.UnknownHostException
 
-class ListVideoViewModel: ViewModel() {
-    private val _videoList = MutableSharedFlow<List<VideoData>>()
-    val videoList: SharedFlow<List<VideoData>> get() = _videoList
-
+class ListVideoViewModel : ViewModel() {
     private lateinit var videoSDK: VideoSDK
+
+    sealed class VideoUIState(val videos: List<VideoData>? = null, val errMsg: String?) {
+        class Success(videos: List<VideoData>) : VideoUIState(videos, null)
+
+        class Loading : VideoUIState(null, null)
+
+        class Error(errMsg: String) : VideoUIState(null, errMsg)
+    }
+
+    private val _listVideoUIState = MutableSharedFlow<VideoUIState>()
+    val listVideoUIState: SharedFlow<VideoUIState> get() = _listVideoUIState
 
     fun setupDbDriver(context: Context) {
         videoSDK = VideoSDK(AndroidDatabaseDriverFactory(context))
-        getVideos(true)
+        getVideos(false)
     }
 
-    fun getVideos(forceReload: Boolean = false) = viewModelScope.launch {
-        val videos = videoSDK.getVideos(forceReload)
-        _videoList.emit(
-            videos.toListDomain()
-        )
-    }
+    fun getVideos(forceReload: Boolean) = viewModelScope.launch {
+        _listVideoUIState.emit(VideoUIState.Loading())
 
+        try {
+            val videos = videoSDK.getVideos(forceReload)
+            _listVideoUIState.emit(VideoUIState.Success(videos.toListDomain()))
+
+        } catch (e: CustomException.OfflineError) {
+            _listVideoUIState.emit(VideoUIState.Error("Tidak ada koneksi internet"))
+
+
+        } catch (e: UnknownHostException) {
+            _listVideoUIState.emit(VideoUIState.Error("Tidak ada koneksi internet"))
+
+        }
+    }
 
 }
